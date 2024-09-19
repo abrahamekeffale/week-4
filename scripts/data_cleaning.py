@@ -2,13 +2,11 @@ import pandas as pd
 import numpy as np
 from scipy import stats
 
-def handle_missing_data(df: pd.DataFrame):
-    """
-    Handles missing values by filling numeric columns with their median.
-    :param df: DataFrame to clean
-    :return: Cleaned DataFrame
-    """
-    df.fillna(df.median(), inplace=True)
+def handle_missing_data(df):
+    # Convert columns to numeric, forcing errors to NaN
+    df['numeric_column'] = pd.to_numeric(df['numeric_column'], errors='coerce')
+    # Fill NaN values with the median
+    df['numeric_column'].fillna(df['numeric_column'].median(), inplace=True)
     return df
 
 def remove_outliers(df: pd.DataFrame, threshold: float = 3.0):
