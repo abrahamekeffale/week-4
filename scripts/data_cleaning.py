@@ -3,10 +3,11 @@ import numpy as np
 from scipy import stats
 
 def handle_missing_data(df):
-    # Convert columns to numeric, forcing errors to NaN
-    df['numeric_column'] = pd.to_numeric(df['numeric_column'], errors='coerce')
-    # Fill NaN values with the median
-    df['numeric_column'].fillna(df['numeric_column'].median(), inplace=True)
+    if 'numeric_column' in df.columns:
+        df['numeric_column'] = pd.to_numeric(df['numeric_column'], errors='coerce')
+        df['numeric_column'].fillna(df['numeric_column'].median(), inplace=True)
+    else:
+        print("Column 'numeric_column' does not exist in the DataFrame")
     return df
 
 def remove_outliers(df: pd.DataFrame, threshold: float = 3.0):
